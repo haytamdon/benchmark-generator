@@ -203,9 +203,9 @@ The generated report should be final containing all of the necessary elements an
 the previous report so it shouldn't start with Updated report or show any signs that it's gone through revisions"""
 
 PRESENTATION_OUTLINE_GENERATION_PROMPT = """
-You are a presentation slide generating assistant. Given a benchmark report you are to generate me a general outline of 
-a powerpoint presentation to encapsulate the main points and contents of the report but in presentable and digestable 
-format 
+You are a presentation slide generating assistant. Given a question and its benchmark report you are to generate me 
+a general outline of a powerpoint presentation to encapsulate the main points and contents of the report but in 
+a presentable and digestable format 
 do NOT go in details over the actual content and details of the slides
 Provide just a general outline of what the slides should contain and how they should be structured"""
 
