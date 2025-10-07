@@ -72,9 +72,7 @@ def search_pipeline(request: SearchRequest,
     report = report_generation(queries_with_analysis= all_queries_with_analysis,
                       client= cerebras_client,
                       model_name= "qwen-3-235b-a22b-instruct-2507")
-    if num_iterations<=1:
-        return report
-    else:
+    if num_iterations>1:
         for i in range(num_iterations-1):
             logger.info("Generating next step")
             next_queries = next_query_creation(report_obj= report,
@@ -90,4 +88,4 @@ def search_pipeline(request: SearchRequest,
                                             cerebras_client= cerebras_client,
                                             linkup_client= linkup_client,
                                             report= report)
-        return report
+    return report
