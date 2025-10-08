@@ -132,3 +132,13 @@ class SlideOutline(BaseModel):
     main_query: str
     report: str
     outline: str
+
+class SlideContent(BaseModel):
+    slide_number: int
+    slide_title: str
+    slide_content: str
+
+class PresentationContents(BaseModel):
+    query: str
+    num_of_slides: int
+    slides: List[SlideContent]

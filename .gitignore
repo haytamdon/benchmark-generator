@@ -26,3 +26,6 @@ app.log
 
 # Report outputs
 test.md
+
+# App data
+app_data/

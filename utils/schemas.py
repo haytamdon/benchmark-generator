@@ -35,5 +35,5 @@ class Slide(BaseModel):
     slide_number: int = Field(..., description="Slide number or order")
 
 class Presentation(BaseModel):
-    number_of_slides: int
+    number_of_slides: int = Field(..., description="Total number of slides to be generated")
     slide_content: List[Slide]
