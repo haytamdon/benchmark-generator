@@ -142,3 +142,8 @@ class PresentationContents(BaseModel):
     query: str
     num_of_slides: int
     slides: List[SlideContent]
+
+class PresentenOutput(BaseModel):
+    presentation_id : str
+    file_path : str
+    edit_path : str

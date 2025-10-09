@@ -9,9 +9,10 @@ from steps.report_generation import report_generation
 from steps.extract_next_questions import next_query_creation
 from steps.explore_next_question import simplified_pipeline
 from steps.slide_generation import slide_outline_generation, slides_content_generation
+from steps.create_slides import create_presentation
 from utils.llm_utils import get_cerebras_client, get_sambanova_client
 from utils.search_utils import get_linkup_client
-from utils.pydantic_models import SearchRequest, PresentationContents
+from utils.pydantic_models import SearchRequest, PresentenOutput
 from utils.utils import (parallel_run_metadata, 
                          format_all_questions_output, 
                          parallel_process_queries, 
@@ -31,7 +32,7 @@ linkup_client = get_linkup_client(os.environ.get("LINKUP_API_KEY"))
 
 sambanova_client = get_sambanova_client(os.environ.get("SAMBANOVA_API_KEY"))
 
-@router.post("/", response_model= PresentationContents)
+@router.post("/")
 def search_pipeline(request: SearchRequest,
                     model_name: str = "llama-4-scout-17b-16e-instruct"):
     query = request.query
@@ -97,5 +98,7 @@ def search_pipeline(request: SearchRequest,
     
     contents = slides_content_generation(client= cerebras_client,
                                          outline= outline,
-                                         model_name= "qwen-3-235b-a22b-instruct-2507",)
-    return contents
+                                         model_name= "qwen-3-235b-a22b-instruct-2507")
+    
+    presentation = create_presentation(contents)
+    return presentation
