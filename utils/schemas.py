@@ -37,3 +37,11 @@ class Slide(BaseModel):
 class Presentation(BaseModel):
     number_of_slides: int = Field(..., description="Total number of slides to be generated")
     slide_content: List[Slide]
+
+class EvaluationCriterion(BaseModel):
+    criterion_name: str = Field(..., description="name of the criterion based on which we are evaluating the identified tools")
+    nature: str = Field(..., description="Type of criterion Quantitive or Qualitative")
+    reasoning: str = Field(..., description="Reasoning as to why this criterion was chosen")
+
+class ListofCriteria(BaseModel):
+    list_of_criteria = List[EvaluationCriterion] = Field(..., description="list of all the criteria for evaluation")

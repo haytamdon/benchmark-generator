@@ -102,3 +102,4 @@ def search_pipeline(request: SearchRequest,
     
     presentation = create_presentation(contents)
     return presentation
+    # return contents
