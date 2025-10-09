@@ -28,3 +28,12 @@ class NextQuestion(BaseModel):
 
 class NextQuestionList(BaseModel):
     questions: List[NextQuestion] = Field(..., description="List of next questions")
+
+class Slide(BaseModel):
+    title: str = Field(..., description="Title of the slide")
+    content: str = Field(..., description="Content of the slide")
+    slide_number: int = Field(..., description="Slide number or order")
+
+class Presentation(BaseModel):
+    number_of_slides: int = Field(..., description="Total number of slides to be generated")
+    slide_content: List[Slide]

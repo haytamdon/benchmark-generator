@@ -202,6 +202,25 @@ CONCLUSION (300-400 words):
 The generated report should be final containing all of the necessary elements and ready to be read by a user who hasn't seen
 the previous report so it shouldn't start with Updated report or show any signs that it's gone through revisions"""
 
+PRESENTATION_OUTLINE_GENERATION_PROMPT = """
+You are a presentation slide generating assistant. Given a question and its benchmark report you are to generate me 
+a general outline of a powerpoint presentation to encapsulate the main points and contents of the report but in 
+a presentable and digestable format 
+do NOT go in details over the actual content and details of the slides
+Provide just a general outline of what the slides should contain and how they should be structured"""
+
+PRESENTATION_CONTENT_GENERATION_PROMPT = """
+You are a presentation slide generating assistant. Given a benchmark report and a presentation slide outline
+generate me the content of each slide based on details on the report and the general outline provided
+
+The content should be in these following forms:
+- titles and subtitles
+- bulletpoints
+- tables
+- short paragraphes
+
+The content shouldn't be very long and unreadable"""
+
 # Synthesis prompt for individual sub-questions
 # Used to synthesize search results into comprehensive answers for sub-questions
 SYNTHESIS_PROMPT = """

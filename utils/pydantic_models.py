@@ -127,3 +127,23 @@ class ReportNextSteps(BaseModel):
     main_query: str = Field(..., description="original query")
     report: str = Field(..., description="generated report")
     next_questions: List[str] = Field(..., description="next queries")
+
+class SlideOutline(BaseModel):
+    main_query: str
+    report: str
+    outline: str
+
+class SlideContent(BaseModel):
+    slide_number: int
+    slide_title: str
+    slide_content: str
+
+class PresentationContents(BaseModel):
+    query: str
+    num_of_slides: int
+    slides: List[SlideContent]
+
+class PresentenOutput(BaseModel):
+    presentation_id : str
+    file_path : str
+    edit_path : str

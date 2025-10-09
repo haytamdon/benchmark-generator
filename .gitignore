@@ -5,6 +5,7 @@ build/
 dist/
 wheels/
 *.egg-info
+.DS_Store
 
 # Virtual environments
 .venv
@@ -26,3 +27,6 @@ app.log
 
 # Report outputs
 test.md
+
+# App data
+app_data/
