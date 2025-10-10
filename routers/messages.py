@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from dotenv import load_dotenv
-from steps.query_decomposition import query_decomposition_step
+from steps.query_generation import query_generation_step
 from steps.extract_metadata import metadata_extraction_step
 from steps.sub_question_search import parallelize_question_search
 from steps.process_queries import process_queries_step, map_queries_to_enhanced_queries, map_query_to_enhanced_query
@@ -10,6 +10,7 @@ from steps.extract_next_questions import next_query_creation
 from steps.explore_next_question import simplified_pipeline
 from steps.slide_generation import slide_outline_generation, slides_content_generation
 from steps.create_slides import create_presentation
+from steps.benchmark_criteria import define_evaluation_criteria
 from utils.llm_utils import get_cerebras_client, get_sambanova_client
 from utils.search_utils import get_linkup_client
 from utils.pydantic_models import SearchRequest, PresentenOutput
@@ -38,9 +39,12 @@ def search_pipeline(request: SearchRequest,
     query = request.query
     max_sub_questions = request.max_sub_questions
     num_iterations = request.max_iterations
-    sub_queries = query_decomposition_step(main_query= query,
+    criteria_list = define_evaluation_criteria(client= cerebras_client,
+                               model_name= model_name,
+                               main_query= query)
+    sub_queries = query_generation_step(main_query= query,
                                            model_name= model_name,
-                                           num_sub_questions= max_sub_questions,
+                                           num_generated_questions= max_sub_questions,
                                            client= cerebras_client)
     questions = [query] + sub_queries.sub_questions
     logger.info(f"Starting the metadata extraction for {len(questions)} questions")
@@ -100,6 +104,6 @@ def search_pipeline(request: SearchRequest,
                                          outline= outline,
                                          model_name= "qwen-3-235b-a22b-instruct-2507")
     
-    presentation = create_presentation(contents)
-    return presentation
-    # return contents
+    # presentation = create_presentation(contents)
+    # return presentation
+    return contents

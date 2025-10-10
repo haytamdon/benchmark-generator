@@ -43,5 +43,5 @@ class EvaluationCriterion(BaseModel):
     nature: str = Field(..., description="Type of criterion Quantitive or Qualitative")
     reasoning: str = Field(..., description="Reasoning as to why this criterion was chosen")
 
-class ListofCriteria(BaseModel):
+class CriteriaList(BaseModel):
     list_of_criteria: List[EvaluationCriterion] = Field(..., description="list of all the criteria for evaluation")
