@@ -44,4 +44,4 @@ class EvaluationCriterion(BaseModel):
     reasoning: str = Field(..., description="Reasoning as to why this criterion was chosen")
 
 class ListofCriteria(BaseModel):
-    list_of_criteria = List[EvaluationCriterion] = Field(..., description="list of all the criteria for evaluation")
+    list_of_criteria: List[EvaluationCriterion] = Field(..., description="list of all the criteria for evaluation")

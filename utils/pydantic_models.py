@@ -155,4 +155,4 @@ class Criterion(BaseModel):
 
 class Criteria(BaseModel):
     query: str
-    list_of_criteria = List[Criterion] = Field(..., description="list of all the criteria for evaluation")
+    list_of_criteria: List[Criterion] = Field(..., description="list of all the criteria for evaluation")
