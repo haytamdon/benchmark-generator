@@ -62,7 +62,7 @@ def parallel_analyze_output(function: Callable,
         model_name: The model name to be used.
     """
     with ThreadPoolExecutor(max_workers=num_max_workers) as executor:
-        futures = [executor.submit(function, main_question, sub_question, search_result, client, model_name) for sub_question, search_result in params]
+        futures = [executor.submit(function, main_question, generated_question, search_result, client, model_name) for generated_question, search_result in params]
         results = [f.result() for f in futures]
     return results
 

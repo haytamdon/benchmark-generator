@@ -11,12 +11,12 @@ class EnhancedSearchQuery(BaseModel):
     search_query: str = Field(...,description="The enhanced search query")
     reasoning: str = Field(..., description="Reasoning as to how the search query was generated")
 
-class SubQuestion(BaseModel):
-    sub_question: str = Field(..., description="A sub-question derived from the main question")
+class GeneratedQuestion(BaseModel):
+    generated_question: str = Field(..., description="A sub-question derived from the main question")
     reasoning: str = Field(..., description="The reasoning for why this sub-question is important")
 
-class SubQuestionList(BaseModel):
-    questions: List[SubQuestion] = Field(..., description="List of sub-questions")
+class GeneratedQuestionList(BaseModel):
+    questions: List[GeneratedQuestion] = Field(..., description="List of sub-questions")
 
 class SearchDates(BaseModel):
     from_date: str = Field(..., description="Search date start")
@@ -37,3 +37,11 @@ class Slide(BaseModel):
 class Presentation(BaseModel):
     number_of_slides: int = Field(..., description="Total number of slides to be generated")
     slide_content: List[Slide]
+
+class EvaluationCriterion(BaseModel):
+    criterion_name: str = Field(..., description="name of the criterion based on which we are evaluating the identified tools")
+    nature: str = Field(..., description="Type of criterion Quantitive or Qualitative")
+    reasoning: str = Field(..., description="Reasoning as to why this criterion was chosen")
+
+class CriteriaList(BaseModel):
+    list_of_criteria: List[EvaluationCriterion] = Field(..., description="list of all the criteria for evaluation")
