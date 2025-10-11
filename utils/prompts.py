@@ -21,43 +21,16 @@ A good search query should:
 
 # Query decomposition prompt
 # Used to break down complex research queries into specific sub-questions
-QUERY_DECOMPOSITION_PROMPT = """
-You are a Benchmarking assistant specializing in research design. You will be given a MAIN RESEARCH QUERY that needs to be explored comprehensively. Your task is to create diverse, insightful sub-questions that explore different dimensions of the topic.
+QUERY_GENERATION_PROMPT = """
+You are a Benchmarking assistant specializing in research design. You will be given a MAIN RESEARCH QUERY that needs to be explored comprehensively. Your task is to create diverse, insightful questions that allow for an effective benchmarking of the topic at hand.
 
 IMPORTANT: The main query should be interpreted as a single research question, not as a noun phrase. For example:
-- If the query is "Is LLMOps a subset of MLOps?", create questions ABOUT LLMOps and MLOps, not questions like "What is 'Is LLMOps a subset of MLOps?'"
+- If the query is "Give me a benchmark on MLOps & LLMOps tools", create questions ABOUT LLMOps and MLOps tools to allow for efficient benchmarking, not questions like "What is 'Is LLMOps a subset of MLOps?'"
 - Focus on the concepts, relationships, and implications within the query
-
-Create sub-questions that explore these DIFFERENT DIMENSIONS:
-
-1. **Definitional/Conceptual**: Define key terms and establish conceptual boundaries
-   Example: "What are the core components and characteristics of LLMOps?"
-
-2. **Comparative/Relational**: Compare and contrast the concepts mentioned
-   Example: "How do the workflows and tooling of LLMOps differ from traditional MLOps?"
-
-3. **Historical/Evolutionary**: Trace development and emergence
-   Example: "How did LLMOps emerge from MLOps practices?"
-
-4. **Structural/Technical**: Examine technical architecture and implementation
-   Example: "What specific tools and platforms are unique to LLMOps?"
-
-5. **Practical/Use Cases**: Explore real-world applications
-   Example: "What are the key use cases that require LLMOps but not traditional MLOps?"
-
-6. **Stakeholder/Industry**: Consider different perspectives and adoption
-   Example: "How are different industries adopting LLMOps vs MLOps?"
-
-7. **Challenges/Limitations**: Identify problems and constraints
-   Example: "What unique challenges does LLMOps face that MLOps doesn't?"
-
-8. **Future/Trends**: Look at emerging developments
-   Example: "How is the relationship between LLMOps and MLOps expected to evolve?"
 
 QUALITY GUIDELINES:
 - Each sub-question must explore a DIFFERENT dimension - no repetitive variations
 - Questions should be specific, concrete, and investigable
-- Mix descriptive ("what/who") with analytical ("why/how") questions
 - Ensure questions build toward answering the main query comprehensively
 - Frame questions to elicit detailed, nuanced responses
 - Consider technical, business, organizational, and strategic aspects
@@ -78,8 +51,8 @@ STICK TO YOUR TASK
 INSIGHT_ANALYSIS_PROMPT = """
 You are a Benchmarking assistant specialized in research, knowledge and data analysis. You will be given:
 1. a research question 
-2. a subquestion of the research question
-3. the synthetised information from internet research on that subquestion.
+2. a GeneratedQuestion of the research question
+3. the synthetised information from internet research on that GeneratedQuestion.
 
 Your job is to create a well-structured, coherent and detailed analysis of all of this information to extract:
 - The key insights and data available in this research
@@ -91,7 +64,7 @@ You are a Benchmarking assistant responsible for compiling an in-depth, comprehe
 1. The original research query
 2. The sub-questions that were explored
 3. the Synthesized information for the original query as well as each sub-question
-4. An analysis of the synthesized information of each question and subquestion
+4. An analysis of the synthesized information of each question and GeneratedQuestion
 
 Your task is to create a well-structured, coherent, professional-quality research report with the following features:
 

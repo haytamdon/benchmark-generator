@@ -16,9 +16,9 @@ def parallelize_question_search(all_questions: EnhancedQueryList,
     sub_questions = all_questions.sub_queries
     all_params = [(main_question.enhanced_query, 
                    main_question.from_date, 
-                   main_question.to_date)] + [(sub_question.enhanced_query, 
-                                               sub_question.from_date, 
-                                               sub_question.to_date) for sub_question in sub_questions]
+                   main_question.to_date)] + [(generated_question.enhanced_query, 
+                                               generated_question.from_date, 
+                                               generated_question.to_date) for generated_question in sub_questions]
     num_max_workers = len(all_params)
     logger.info(f"Starting the question search for {num_max_workers} questions")
     outputs = sequential_run_search(function=search_linkup, 
@@ -26,6 +26,6 @@ def parallelize_question_search(all_questions: EnhancedQueryList,
                         client= client, 
                         search_mode= search_mode, 
                         output_type= output_type)
-    all_questions = [main_question.enhanced_query] + [sub_question.enhanced_query for sub_question in sub_questions]
+    all_questions = [main_question.enhanced_query] + [generated_question.enhanced_query for generated_question in sub_questions]
     formatted_search_results = format_outputs(queries= all_questions, search_results= outputs)
     return formatted_search_results
