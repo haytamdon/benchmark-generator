@@ -30,7 +30,7 @@ def simplified_pipeline(query: str,
     search_analysis_param = format_single_output(query= query,
                          search_result= search_result)
     analysis = insight_analysis(main_question=original_question,
-                                sub_question= query,
+                                generated_question= query,
                                 search_result= search_analysis_param.answer,
                                 client= cerebras_client,
                                 model_name="qwen-3-235b-a22b-thinking-2507")

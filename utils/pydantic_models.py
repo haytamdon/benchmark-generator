@@ -17,7 +17,7 @@ class SearchRequest(BaseModel):
     max_sub_questions: int = 10
     max_iterations: int = 2
 
-class QuerySubQuestions(BaseModel):
+class QueryGeneratedQuestions(BaseModel):
     """Immutable context containing the research query and its decomposition.
 
     This artifact is created once at the beginning of the pipeline and
@@ -26,7 +26,7 @@ class QuerySubQuestions(BaseModel):
     Attributes:
         main_question (str): main question.
         sub_questions (List[str]): All the questions extracted from the main question.
-        justifications (List[str]): Links between the main query and the subquestions.
+        justifications (List[str]): Links between the main query and the GeneratedQuestions.
     """    
     main_query: str = Field(
         ..., description="The main research question from the user"
@@ -37,7 +37,7 @@ class QuerySubQuestions(BaseModel):
     )
     justifications: List[str] = Field(
         default_factory= list,
-        description="Links between the main query and the subquestions"
+        description="Links between the main query and the GeneratedQuestions"
     )
 
 class QuerySearchMetadata(BaseModel):
@@ -147,3 +147,12 @@ class PresentenOutput(BaseModel):
     presentation_id : str
     file_path : str
     edit_path : str
+
+class Criterion(BaseModel):
+    criterion_name: str = Field(..., description="name of the criterion based on which we are evaluating the identified tools")
+    nature: str = Field(..., description="Type of criterion Quantitive or Qualitative")
+    reasoning: str = Field(..., description="Reasoning as to why this criterion was chosen")
+
+class Criteria(BaseModel):
+    query: str
+    list_of_criteria: List[Criterion] = Field(..., description="list of all the criteria for evaluation")

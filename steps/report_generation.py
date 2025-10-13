@@ -12,10 +12,10 @@ def formulate_main_query_subprompt(main_question: str,
     """
     return sub_prompt
 
-def formulate_sub_query_subprompt(sub_question: str,
+def formulate_sub_query_subprompt(generated_question: str,
                                   search_result: str,
                                   analysis: str)-> str:
-    sub_prompt = f"""A sub question generated out of the main question is the following {sub_question}.
+    sub_prompt = f"""A sub question generated out of the main question is the following {generated_question}.
     Here is the internet search result for that question {search_result}
     Here is the analysis of the query with search results {analysis}
     """
@@ -35,7 +35,7 @@ def formulate_prompt(queries_with_analysis: QueriesInsightAnalysis)-> str:
         sub_query = sub_query_with_analysis.query
         sub_query_search_results = sub_query_with_analysis.search_result
         sub_query_analysis = sub_query_with_analysis.analysis
-        sub_query_subprompt = formulate_sub_query_subprompt(sub_question= sub_query,
+        sub_query_subprompt = formulate_sub_query_subprompt(generated_question= sub_query,
                                                             search_result= sub_query_search_results,
                                                             analysis= sub_query_analysis)
         sub_queries_subprompts.append(sub_query_subprompt)

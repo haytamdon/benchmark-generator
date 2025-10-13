@@ -23,7 +23,7 @@ app.log
 !env.example
 
 # Notebooks
-.ipynb
+*.ipynb
 
 # Report outputs
 test.md
