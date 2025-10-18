@@ -7,7 +7,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def parallelize_question_search(all_questions: EnhancedQueryList,
+def batch_question_search(all_questions: EnhancedQueryList,
                                 client: LinkupClient,
                                 search_mode: Literal["standard", "deep"] = "standard",
                                 output_type: Literal["searchResults", "sourcedAnswer", "structured"] = "sourcedAnswer"

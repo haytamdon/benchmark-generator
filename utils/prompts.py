@@ -196,7 +196,15 @@ The content shouldn't be very long and unreadable"""
 
 EVALUATION_CRITERIA_PROMPT = """
 You are a benchmarking assistant. Given a certain topic you are to provide a list of metrics and evaluation
-criteria that we should rely to evaluate the tools, frameworks or processes that we wish to benchmark
+criteria that we should rely to evaluate the tools, services, companies/firms, frameworks or processes etc... 
+that we wish to benchmark
 
 For each metric/criteria you are to provide it's nature whether it is qualitative or quantative and you
 are to provide a reasonning for that metric"""
+
+TOOLS_EXTRACTION_PROMPT = """
+You are a benchmarking assistant. Given a benchmark topic and a list of search results of multiple subqueries on the topic,
+extract all of the subjects of benchmark (e.g., softwares, Applications, frameworks, services, companies...) that appear in the results. 
+
+For each element you extract provide an explanation of the reasoning of the choice.
+"""

@@ -71,6 +71,14 @@ class SubQueriesSearchMetadata(BaseModel):
     sub_query_meta : List[QuerySearchMetadata]
 
 class EnhancedQuerywithMetadata(BaseModel):
+    """Enhanced query with metadata.
+
+    Attributes:
+        original_query (str): The original query.
+        enhanced_query (str): The enhanced query.
+        from_date (date): Optional start date for the search.
+        to_date (date): Optional end date for the search.
+    """
     original_query: str = Field(..., description="The original query")
     enhanced_query: str = Field(..., description="The enhanced query")
     from_date: date = Field(
@@ -83,6 +91,12 @@ class EnhancedQuerywithMetadata(BaseModel):
     )
 
 class EnhancedQueryList(BaseModel):
+    """Container for a main enhanced query and the enhanced sub‑queries with their metadata.
+
+    Attributes:
+        main_query (EnhancedQuerywithMetadata): The primary enhanced query.
+        sub_queries (List[EnhancedQuerywithMetadata]): List of enhanced sub‑queries.
+    """
     main_query: EnhancedQuerywithMetadata
     sub_queries: List[EnhancedQuerywithMetadata]
 
@@ -111,48 +125,119 @@ class QuerySubQueryResults(BaseModel):
     sub_queries: List[QuerySearchResults]
 
 class QueryAnalysis(BaseModel):
+    """Analysis of a single query's search result.
+
+    Attributes:
+        query (str): The researched query.
+        search_result (str): The raw search result text.
+        analysis (str): Interpretation or insights derived from the result.
+    """
     query: str = Field(..., description="researched query")
     search_result: str = Field(..., description="Search Results in Natural Language")
     analysis: str = Field(..., description="Search result analysis")
 
 class QueriesInsightAnalysis(BaseModel):
+    """Aggregated analysis for a main query and its sub‑queries.
+
+    Attributes:
+        main_query (QueryAnalysis): Analysis of the main query.
+        sub_queries (List[QueryAnalysis]): Analyses of each sub‑query.
+    """
     main_query: QueryAnalysis
     sub_queries: List[QueryAnalysis]
 
 class QueryReport(BaseModel):
+    """Generated report for a query.
+
+    Attributes:
+        main_query (str): The query that was researched.
+        report (str): The generated report content.
+    """
     main_query: str = Field(..., description="query to research")
     report: str = Field(..., description="generated report")
 
 class ReportNextSteps(BaseModel):
+    """Next steps derived from a generated report.
+
+    Attributes:
+        main_query (str): The original query.
+        report (str): The generated report content.
+        next_questions (List[str]): Suggested follow‑up questions.
+    """
     main_query: str = Field(..., description="original query")
     report: str = Field(..., description="generated report")
     next_questions: List[str] = Field(..., description="next queries")
 
 class SlideOutline(BaseModel):
+    """Outline structure for a presentation slide deck.
+
+    Attributes:
+        main_query (str): The primary query the slides address.
+        report (str): The report content to be summarized.
+        outline (str): Textual outline of the slide deck.
+    """
     main_query: str
     report: str
     outline: str
 
 class SlideContent(BaseModel):
+    """Content for an individual slide.
+
+    Attributes:
+        slide_number (int): The slide's sequential number.
+        slide_title (str): Title of the slide.
+        slide_content (str): Body text or markdown for the slide.
+    """
     slide_number: int
     slide_title: str
     slide_content: str
 
 class PresentationContents(BaseModel):
+    """Complete set of presentation data.
+
+    Attributes:
+        query (str): The original query driving the presentation.
+        num_of_slides (int): Total number of slides.
+        slides (List[SlideContent]): List of slide contents.
+    """
     query: str
     num_of_slides: int
     slides: List[SlideContent]
 
 class PresentenOutput(BaseModel):
+    """Output information for a generated presentation.
+
+    Attributes:
+        presentation_id (str): Identifier of the created presentation.
+        file_path (str): Path to the presentation file.
+        edit_path (str): Path to the editable version of the presentation.
+    """
     presentation_id : str
     file_path : str
     edit_path : str
 
 class Criterion(BaseModel):
+    """Single evaluation criterion.
+
+    Attributes:
+        criterion_name (str): Name of the criterion used for evaluation.
+        nature (str): Type of criterion (Quantitative or Qualitative).
+        reasoning (str): Explanation for why this criterion was chosen.
+    """
     criterion_name: str = Field(..., description="name of the criterion based on which we are evaluating the identified tools")
     nature: str = Field(..., description="Type of criterion Quantitive or Qualitative")
     reasoning: str = Field(..., description="Reasoning as to why this criterion was chosen")
 
 class Criteria(BaseModel):
+    """Collection of evaluation criteria for a query.
+
+    Attributes:
+        query (str): The query being evaluated.
+        list_of_criteria (List[Criterion]): List of criteria objects.
+    """
     query: str
     list_of_criteria: List[Criterion] = Field(..., description="list of all the criteria for evaluation")
+
+class FirstShortList(BaseModel):
+    benchmark_topic: str = Field(..., description="The question for the benchmark")
+    extracted_shortlist: List[str] = Field(..., description="Extracted subjects for benchmark")
