@@ -45,3 +45,10 @@ class EvaluationCriterion(BaseModel):
 
 class CriteriaList(BaseModel):
     list_of_criteria: List[EvaluationCriterion] = Field(..., description="list of all the criteria for evaluation")
+
+class BenchmarkSubject(BaseModel):
+    subject_name: str = Field(..., description="Name of the benchmark subject (firm, solution, app...) to be compared")
+    reasoning: str = Field(..., description="Reasoning behind this choice")
+
+class BenchmarkSubjectList(BaseModel):
+    list_of_subjects: List[BenchmarkSubject] = Field(..., description="list of all the extracted benchmark subjects")

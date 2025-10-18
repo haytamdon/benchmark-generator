@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from dotenv import load_dotenv
 from steps.query_generation import query_generation_step
 from steps.extract_metadata import metadata_extraction_step
-from steps.sub_question_search import parallelize_question_search
+from steps.sub_question_search import batch_question_search
 from steps.process_queries import process_queries_step, map_queries_to_enhanced_queries, map_query_to_enhanced_query
 from steps.insight_analysis import insight_analysis, format_insights
 from steps.report_generation import report_generation
@@ -11,6 +11,7 @@ from steps.explore_next_question import simplified_pipeline
 from steps.slide_generation import slide_outline_generation, slides_content_generation
 from steps.create_slides import create_presentation
 from steps.benchmark_criteria import define_evaluation_criteria
+from steps.extract_tools import extract_benchmark_subjects
 from utils.llm_utils import get_cerebras_client, get_sambanova_client
 from utils.search_utils import get_linkup_client
 from utils.pydantic_models import SearchRequest, PresentenOutput
@@ -63,8 +64,12 @@ def search_pipeline(request: SearchRequest,
                                     model_name= model_name)
     search_queries_with_metadata = map_queries_to_enhanced_queries(formatted_result, enhanced_search_queries)
     logger.info("Starting the question search for the main query and the sub queries")
-    all_search_results = parallelize_question_search(all_questions=search_queries_with_metadata,
+    all_search_results = batch_question_search(all_questions=search_queries_with_metadata,
                                 client= linkup_client)
+    logger.info("Extracting all the benchmark targets to be compared")
+    initial_shortlist = extract_benchmark_subjects(client= cerebras_client,
+                               model_name= "qwen-3-235b-a22b-instruct-2507",
+                               search_results_with_queries= all_search_results)
     logger.info("Analyzing all of the outputs of the search")
     search_analysis_params = format_search_outputs(all_search_results)
     analysis = parallel_analyze_output(function= insight_analysis, 
